@@ -21,7 +21,7 @@ const AuthRequired: FC<IProps> = ({children}) => {
         if (!access) {
             nav('/login',{state:{pathname}})
         }
-    }, []);
+    }, [access]);
 
     return (
         <div>
