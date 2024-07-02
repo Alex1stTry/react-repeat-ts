@@ -4,23 +4,24 @@ import {urls} from "../constants";
 import {IRes} from "../types";
 
 
-const access = 'access'
-const refresh = 'refresh'
+const accessToken = 'access'
+const refreshToken = 'refresh'
 
 const authService = {
-    register(data: IAuth): IRes<IAuth> {
-        return apiService.post(urls.users.register, data)
+    register(user: IAuth): IRes<IUser> {
+        console.log(user)
+        return apiService.post(urls.users.register, user)
     },
 
-    async login(user: IAuth): Promise<any> {
+    async login(user: IAuth): Promise<IUser> {
         const {data} = await apiService.post(urls.users.login, user);
-        console.log(data)
-        // const {data: me} = await this.me()
-        // return me
+        this.setTokens(data)
+        const {data: me} = await this.me()
+        return me
     },
-    async refresh():Promise<void>{
+    async refresh(): Promise<void> {
         const refresh = this.getRefresh();
-        const {data} = await apiService.post(urls.users.refresh , {refresh});
+        const {data} = await apiService.post(urls.users.refresh, {refresh});
         this.setTokens(data)
     },
 
@@ -28,19 +29,19 @@ const authService = {
         return apiService.get(urls.users.me);
     },
 
-    setTokens({accessToken, refreshToken}: ITokenPair) {
-        localStorage.setItem(access, accessToken)
-        localStorage.setItem(refresh, refreshToken)
+    setTokens({access, refresh}: ITokenPair) {
+        localStorage.setItem(accessToken, access)
+        localStorage.setItem(refreshToken, refresh)
     },
     getAccess(): string {
-        return localStorage.getItem(access)
-    }, 
+        return localStorage.getItem(accessToken)
+    },
     getRefresh(): string {
-        return localStorage.getItem(refresh)
+        return localStorage.getItem(refreshToken)
     },
     deleteTokens(): void {
-        localStorage.removeItem(access)
-        localStorage.removeItem(refresh)
+        localStorage.removeItem(accessToken)
+        localStorage.removeItem(refreshToken)
     },
 }
 
