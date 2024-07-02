@@ -1,7 +1,9 @@
+import {CarsContainer} from "../components";
+
 const CarsPage = () => {
     return (
         <div>
-            CarsPage
+            <CarsContainer/>
         </div>
     );
 };

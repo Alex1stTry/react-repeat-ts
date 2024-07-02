@@ -5,7 +5,10 @@ const users = '/users'
 const auth = '/auth'
 
 const urls = {
-    cars,
+    cars:{
+        base:cars,
+        byId:(id:number) => `${cars}/${id}`
+    },
     users: {
         register: users,
         login: auth,
