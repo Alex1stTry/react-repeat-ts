@@ -1,4 +1,4 @@
-import {FC, PropsWithChildren} from "react";
+import {FC, PropsWithChildren, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
 import {authService} from "../services/authService";
@@ -17,9 +17,11 @@ const AuthRequired: FC<IProps> = ({children}) => {
     const {pathname} = useAppLocation();
 
 
-    if (!access) {
-        nav('/login',{state:{pathname}})
-    }
+    useEffect(() => {
+        if (!access) {
+            nav('/login',{state:{pathname}})
+        }
+    }, [access]);
 
     return (
         <div>

@@ -15,7 +15,7 @@ const Header = () => {
             dispatch(authActions.me())
         }
     }, [access, currentUser, dispatch]);
-   console.log(currentUser)
+
     return (
         <div className={css.Header}>
             <div>Cars</div>
