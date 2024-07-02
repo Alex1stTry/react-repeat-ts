@@ -25,6 +25,17 @@ const getAll = createAsyncThunk<{ data:ICarPagination }, { page: string }>(
         }
     }
 )
+const create = createAsyncThunk<void,{car:ICar}>(
+'carSlice/create',
+    async ({car}, {rejectWithValue}) =>{
+    try {
+        await carService.create(car)
+    }catch (e){
+        const err = e as AxiosError
+        return rejectWithValue(err.response.data)
+    }
+    }
+)
 const carSlice = createSlice({
     name: 'carSlice',
     initialState,
@@ -43,7 +54,8 @@ const carSlice = createSlice({
 const {reducer:carReducer, actions} = carSlice;
 const carActions = {
     ...actions,
-    getAll
+    getAll,
+    create
 }
 
 export {
