@@ -3,7 +3,7 @@ import {IAuth} from "../../interfaces";
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {authActions} from "../../store";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 
 const LoginForm = () => {
     const {register, handleSubmit} = useForm<IAuth>()
@@ -11,6 +11,9 @@ const LoginForm = () => {
     const {loginError} = useAppSelector(state => state.auth);
     const dispatch = useAppDispatch();
     const nav = useNavigate();
+    const [params] = useSearchParams();
+    const SessionExpired = params.get('SessionExpired')
+    console.log(SessionExpired)
 
 
     const log: SubmitHandler<IAuth> = async (user) => {
@@ -21,13 +24,31 @@ const LoginForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(log)}>
-            {loginError && <div>{loginError}</div>}
-            <input type="text" placeholder={'username'} {...register('username')}/>
-            <input type="text" placeholder={'password'} {...register('password')}/>
-            <button>Login</button>
-        </form>
-    );
+        SessionExpired ?
+            (
+                <div>
+                    <h1>SessionExpired , login again</h1>
+                    <form onSubmit={handleSubmit(log)}>
+                        {loginError && <div>{loginError}</div>
+                        }
+                        <input type="text" placeholder={'username'} {...register('username')}/>
+                        <input type="text" placeholder={'password'} {...register('password')}/>
+                        <button>Login</button>
+                    </form>
+                </div>
+            )
+            :
+            (
+                <form onSubmit={handleSubmit(log)}>
+                    {loginError && <div>{loginError}</div>
+                    }
+                    <input type="text" placeholder={'username'} {...register('username')}/>
+                    <input type="text" placeholder={'password'} {...register('password')}/>
+                    <button>Login</button>
+                </form>
+            )
+)
+    ;
 }
 
 export {LoginForm};

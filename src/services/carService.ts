@@ -4,9 +4,9 @@ import {urls} from "../constants";
 import {IRes} from "../types";
 
 const carService = {
-    getAll: (page:string): IRes<ICarPagination> => apiService.get(urls.cars.base,{params:page}),
+    getAll: (): IRes<ICarPagination<ICar>> => apiService.get(urls.cars.base),
     create: (car: ICar): IRes<ICar> => apiService.post(urls.cars.base, car),
-    update: (id: number, car: ICar): IRes<ICar> => apiService.put(urls.cars.byId(id), car),
+    updateById: (id: number, car: ICar): IRes<ICar> => apiService.put(urls.cars.byId(id), car),
     delete: (id: number): IRes<void> => apiService.delete(urls.cars.byId(id))
 }
 
