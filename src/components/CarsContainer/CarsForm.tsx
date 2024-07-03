@@ -36,11 +36,11 @@ const {carForUpdate} = useAppSelector(state => state.cars);
     return (
         <form className={css.Form} onSubmit={handleSubmit(carForUpdate? updateCar : saveCar)}>
 
-            <TextField label="Brand" variant="filled" {...register('brand')}/>
+            <TextField sx={{font:'5px'}} placeholder={'Brand'} variant="filled" {...register('brand')}/>
             {errors.brand && <div>{errors.brand.message}</div>}
-            <TextField label="Price" variant="filled" {...register('price',{valueAsNumber:true})}/>
+            <TextField placeholder={'Price'} variant="filled" {...register('price',{valueAsNumber:true})}/>
             {errors.price && <div>{errors.price.message}</div>}
-            <TextField label="Year" variant="filled" {...register('year',{valueAsNumber:true})}/>
+            <TextField placeholder={'Year'} variant="filled" {...register('year',{valueAsNumber:true})}/>
             {errors.year && <div>{errors.year.message}</div>}
             <Button variant="contained" type="submit" disabled={!isValid}>{carForUpdate? 'update': 'save'}</Button>
         </form>
