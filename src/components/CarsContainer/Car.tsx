@@ -1,30 +1,29 @@
 import {FC} from "react";
 import {ICar} from "../../interfaces";
 
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import {useAppDispatch} from "../../hooks";
 import {carActions} from "../../store";
+
 
 interface IProps {
     car: ICar
 }
 
 const Car: FC<IProps> = ({car}) => {
-const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
 
-
-
-    const {id,brand,price,year} = car;
+    const {id, brand, price, year} = car;
     return (
         <div>
             <div>id: {id}</div>
             <div>brand: {brand}</div>
             <div>price: {price}</div>
             <div>year: {year}</div>
-            <button onClick={()=>dispatch(carActions.setCarForUpdate(car))}>Update</button>
-            <button>Delete</button>
+            <button onClick={() => dispatch(carActions.setCarForUpdate(car))}>Update</button>
+            <button onClick={() => dispatch(carActions.deleteCar({id}))}>Delete</button>
         </div>
     );
-};
+}
 
-export {Car}; 
+export {Car};

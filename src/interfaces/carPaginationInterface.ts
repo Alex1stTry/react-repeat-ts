@@ -1,4 +1,3 @@
-import {ICar} from "./carInterface";
 
 export interface ICarPagination <T>{
     total_items: number,

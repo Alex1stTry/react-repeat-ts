@@ -2,16 +2,16 @@ import {useAppSelector} from "../../hooks";
 import {useSearchParams} from "react-router-dom";
 
 const CarsPagination = () => {
-    const {nextPage, prevPage} = useAppSelector(state => state.cars);
-    const [_, setQuery] = useSearchParams({page: '1'});
+    const {next, prev} = useAppSelector(state => state.cars);
+    const [, setQuery] = useSearchParams({page: '1'});
 
-    const next = () => {
+    const nextPage = () => {
         setQuery(value => {
             value.set('page', (+value.get('page') + 1).toString())
             return value
         })
     }
-    const prev = () => {
+    const prevPage = () => {
         setQuery(value => {
                 value.set('page', (+value.get('page') - 1).toString())
             return value
@@ -19,8 +19,8 @@ const CarsPagination = () => {
     }
     return (
         <div>
-            <button disabled={!prevPage} onClick={prev}>prev</button>
-            <button disabled={!nextPage} onClick={next}>next</button>
+            <button disabled={!prev} onClick={prevPage}>prev</button>
+            <button disabled={!next} onClick={nextPage}>next</button>
         </div>
     );
 };
