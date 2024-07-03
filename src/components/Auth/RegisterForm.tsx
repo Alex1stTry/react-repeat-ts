@@ -1,11 +1,14 @@
 import {SubmitHandler, useForm} from "react-hook-form";
+import {useNavigate} from "react-router-dom";
+import {Button, TextField} from "@mui/material";
 
 import {IAuth} from "../../interfaces";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {userValidator} from "../../validators";
-import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
+import {useAppDispatch,useAppSelector} from "../../hooks";
 import {authActions} from "../../store";
-import {useNavigate} from "react-router-dom";
+import css from'./form.module.css'
+
 
 const RegisterForm = () => {
     const nav = useNavigate();
@@ -25,11 +28,11 @@ const RegisterForm = () => {
         }
     }
         return (
-            <form onSubmit={handleSubmit(reg)}>
+            <form className={css.Form} onSubmit={handleSubmit(reg)}>
                 {registerError && <div>{registerError}</div>}
-                <input type="text" placeholder={'username'} {...register('username')}/>
-                <input type="text" placeholder={'password'} {...register('password')}/>
-                <button disabled={!isValid}>Register</button>
+                <TextField label="Username" variant="filled" {...register('username')}/>
+                <TextField label="Password" variant="filled" {...register('password')}/>
+                <Button variant="contained" disabled={!isValid} type="submit">Register</Button>
                 {errors.username && <div>{errors.username.message}</div>}
                 {errors.password && <div>{errors.password.message}</div>}
             </form>

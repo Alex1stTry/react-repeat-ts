@@ -7,6 +7,7 @@ import css from './Form.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {carActions} from "../../store";
 import {useEffect} from "react";
+import {Button, TextField} from "@mui/material";
 
 const CarsForm = () => {
     const {register, reset, formState: {errors, isValid}, handleSubmit,setValue} = useForm<ICar>({
@@ -34,13 +35,14 @@ const {carForUpdate} = useAppSelector(state => state.cars);
 
     return (
         <form className={css.Form} onSubmit={handleSubmit(carForUpdate? updateCar : saveCar)}>
-            <input type="text" placeholder={'brand'} {...register('brand')}/>
+
+            <TextField label="Brand" variant="filled" {...register('brand')}/>
             {errors.brand && <div>{errors.brand.message}</div>}
-            <input type="text" placeholder={'price'} {...register('price', {valueAsNumber: true})}/>
+            <TextField label="Price" variant="filled" {...register('price',{valueAsNumber:true})}/>
             {errors.price && <div>{errors.price.message}</div>}
-            <input type="text" placeholder={'year'} {...register('year', {valueAsNumber: true})}/>
+            <TextField label="Year" variant="filled" {...register('year',{valueAsNumber:true})}/>
             {errors.year && <div>{errors.year.message}</div>}
-            <button disabled={!isValid}>{carForUpdate? 'update': 'save'}</button>
+            <Button variant="contained" type="submit" disabled={!isValid}>{carForUpdate? 'update': 'save'}</Button>
         </form>
     );
 };

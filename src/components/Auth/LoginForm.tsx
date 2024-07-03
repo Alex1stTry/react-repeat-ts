@@ -1,9 +1,12 @@
 import {SubmitHandler, useForm} from "react-hook-form";
 import {IAuth} from "../../interfaces";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {Button, TextField} from "@mui/material";
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {authActions} from "../../store";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import css from './form.module.css'
+
 
 const LoginForm = () => {
     const {register, handleSubmit} = useForm<IAuth>()
@@ -13,7 +16,7 @@ const LoginForm = () => {
     const nav = useNavigate();
     const [params] = useSearchParams();
     const SessionExpired = params.get('SessionExpired')
-    console.log(SessionExpired)
+
 
 
     const log: SubmitHandler<IAuth> = async (user) => {
@@ -28,23 +31,21 @@ const LoginForm = () => {
             (
                 <div>
                     <h1>SessionExpired , login again</h1>
-                    <form onSubmit={handleSubmit(log)}>
-                        {loginError && <div>{loginError}</div>
-                        }
-                        <input type="text" placeholder={'username'} {...register('username')}/>
-                        <input type="text" placeholder={'password'} {...register('password')}/>
-                        <button>Login</button>
+                    <form className={css.Form} onSubmit={handleSubmit(log)}>
+                        <TextField label="Username" variant="filled" {...register('username')}/>
+                        <TextField label="Password" variant="filled" {...register('password')}/>
+                        <Button variant="contained" type="submit">Login</Button>
+                        {loginError && <div>{loginError}</div>}
                     </form>
                 </div>
             )
             :
             (
-                <form onSubmit={handleSubmit(log)}>
-                    {loginError && <div>{loginError}</div>
-                    }
-                    <input type="text" placeholder={'username'} {...register('username')}/>
-                    <input type="text" placeholder={'password'} {...register('password')}/>
-                    <button>Login</button>
+                <form className={css.Form} onSubmit={handleSubmit(log)}>
+                    <TextField label="Username" variant="filled" {...register('username')}/>
+                    <TextField label="Password" variant="filled" {...register('password')}/>
+                    <Button variant="contained" type="submit">Login</Button>
+                    {loginError && <div>{loginError}</div>}
                 </form>
             )
 )
